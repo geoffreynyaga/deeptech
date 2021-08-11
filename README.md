@@ -22,3 +22,7 @@ Install my-project with npm
 ```bash
   python manage.py runserver
 ```
+
+
+## API Collections
+go to  http://localhost:8000/swagger/ to view the API documentation
