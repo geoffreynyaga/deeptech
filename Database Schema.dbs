@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="trial" id="Project_12f7" database="MySql" >
+	<schema name="trial" >
+		<table name="farm_chemicals" prior="tbl" >
+			<column name="unique_id" type="int" jt="4" mandatory="y" />
+			<column name="seed" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="chemical_name" type="varchar" length="50" jt="12" />
+			<column name="chemical_provider" type="varchar" length="30" jt="12" />
+			<column name="dosage" prior="d" type="varchar" length="20" jt="12" />
+			<index name="pk_farm_chemicals_unique_id" unique="PRIMARY_KEY" >
+				<column name="unique_id" />
+			</index>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="farm_crops" prior="tbl" >
+			<column name="unique_id" type="int" jt="4" mandatory="y" />
+			<column name="crop" type="varchar" length="30" jt="12" />
+			<column name="seed" type="varchar" length="30" jt="12" />
+			<column name="acreage" type="int" jt="4" />
+			<index name="pk_farm_crops_unique_id" unique="PRIMARY_KEY" >
+				<column name="unique_id" />
+			</index>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="farm_diseases" prior="pest" >
+			<column name="unique_id" prior="pk" type="int" jt="4" mandatory="y" />
+			<column name="crop" prior="name" type="varchar" length="30" jt="12" />
+			<column name="seed" prior="farm_fk" type="varchar" length="30" jt="12" />
+			<column name="disease" type="varchar" length="30" jt="12" />
+			<column name="affected_plot" type="int" length="20" jt="4" />
+			<column name="plot_location" type="varchar" length="30" jt="12" />
+			<index name="pk_pest_pk" unique="PRIMARY_KEY" >
+				<column name="unique_id" />
+			</index>
+			<index name="unq_pest_farm_fk" unique="UNIQUE_KEY" >
+				<column name="seed" />
+			</index>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="farm_pests" prior="farm" >
+			<column name="unique_id" prior="pk" type="int" jt="4" mandatory="y" />
+			<column name="crops" prior="cr" type="varchar" length="20" jt="12" />
+			<column name="pest" prior="folder" type="varchar" length="30" jt="12" />
+			<column name="acreage_covered" type="int" jt="4" />
+			<column name="affected_plot" type="int" length="20" jt="4" />
+			<column name="plot_location" prior="pl" type="varchar" length="20" jt="12" />
+			<index name="pk_farm_pk" unique="PRIMARY_KEY" >
+				<column name="unique_id" />
+			</index>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+		<table name="farmer_main" prior="farmer" >
+			<column name="unique_id" prior="pk" type="int" jt="4" mandatory="y" />
+			<column name="farmer_name" prior="name" type="varchar" length="30" jt="12" />
+			<column name="farmer_phone_number" prior="id_number" type="varchar" length="15" jt="12" />
+			<column name="farm_location" prior="farm_l" type="varchar" length="30" jt="12" />
+			<column name="acres_sprayed" type="int" jt="4" />
+			<column name="acres_mapped" type="int" jt="4" />
+			<column name="number_of_plots" prior="number_" type="int" jt="4" />
+			<index name="pk_farmer_pk" unique="PRIMARY_KEY" >
+				<column name="unique_id" />
+			</index>
+			<index name="unq_farmer_name" unique="UNIQUE_KEY" >
+				<column name="farmer_name" />
+			</index>
+			<options><![CDATA[engine=InnoDB]]></options>
+		</table>
+	</schema>
+	<connector name="PostgreSQL" database="PostgreSQL" host="localhost" port="5432" instance="postgres" />
+	<layout name="Default Layout" id="Layout_b4" joined_routing="y" show_relation="columns" >
+		<entity schema="trial" name="farm_chemicals" color="C1D8EE" x="464" y="48" />
+		<entity schema="trial" name="farm_crops" color="C1D8EE" x="64" y="352" />
+		<entity schema="trial" name="farm_diseases" color="C1D8EE" x="688" y="304" />
+		<entity schema="trial" name="farm_pests" color="C1D8EE" x="368" y="400" />
+		<entity schema="trial" name="farmer_main" color="C1D8EE" x="48" y="48" />
+	</layout>
+</project>
