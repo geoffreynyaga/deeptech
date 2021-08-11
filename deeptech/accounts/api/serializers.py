@@ -35,8 +35,6 @@ class FarmerListSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "farm_name",
-            "first_name",
-            "last_name",
             "location_pin",
             "boundary",
             "plots",
