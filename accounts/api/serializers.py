@@ -1,7 +1,8 @@
 # create model serializer
-from accounts.models import Farmer, PlotDetail
 from django.contrib.auth.models import User
 from rest_framework import serializers
+
+from accounts.models import Farmer, PlotDetail
 
 
 class PlotSerializer(serializers.ModelSerializer):

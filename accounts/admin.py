@@ -1,6 +1,7 @@
-from accounts.models import Farmer, PlotDetail
 from django.contrib import admin
 from leaflet.admin import LeafletGeoAdmin
+
+from accounts.models import Farmer, PlotDetail
 
 
 # Register your models here.
