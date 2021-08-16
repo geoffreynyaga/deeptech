@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.gis.db import models as gis_models
 from django.db import models
+from django.db.models.signals import post_save
 from phonenumber_field.modelfields import PhoneNumberField
 
 # import django get_user_model() model
@@ -60,3 +61,69 @@ class PlotDetail(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class PlotMap(gis_models.Model):
+    plot_detail = models.ForeignKey("accounts.PlotDetail", on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+
+    RGB = "RGB"
+    NDVI = "NDV"
+    MAP_CHOICES = [
+        (RGB, "RGB Map"),
+        (NDVI, "NDVI Map"),
+    ]
+    map_type = models.CharField(
+        max_length=3,
+        choices=MAP_CHOICES,
+        default=RGB,
+    )
+    uploaded_tif = models.FileField(upload_to="uploads/", blank=True, null=True)
+    # or...
+    # file will be saved to MEDIA_ROOT/uploads/2015/01/30
+    # upload = models.FileField(upload_to='uploads/%Y/%m/%d/')
+
+    raster = gis_models.RasterField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+# post-save signal to convert geotif to raster
+def convert_tif_to_raster(sender, instance, created, **kwargs):
+    if instance.uploaded_tif:
+        print(instance.uploaded_tif.path, "instance.upload_tif.path")
+        print(instance.uploaded_tif.url, "instance.upload_tif.url")
+
+        # instance.raster = instance.uploaded_tif.path
+        # instance.uploaded_tif.delete()
+
+        # Read a raster as a file object from a remote source.
+        from urllib.request import urlopen
+
+        full_url = f"http://127.0.0.1:8000{instance.uploaded_tif.url}"
+        print(full_url, "full_url")
+
+        dat = urlopen(full_url).read()
+        print(dat, "dat")
+
+        from django.contrib.gis.gdal import GDALRaster
+
+        # from myapp.models import RasterWithName
+        gdal_raster = GDALRaster(dat)
+        # rast = RasterWithName(name="one", raster=gdal_raster)
+        # rast.save()
+        print(gdal_raster.name, "gdal_raster.name")
+
+        instance.raster = gdal_raster
+
+        # GDALRaster django model
+
+    if instance.uploaded_tif == "":
+        instance.raster = None
+
+    instance.save()
+
+
+post_save.connect(convert_tif_to_raster, sender=PlotMap)
+# import post_save signal django
