@@ -128,11 +128,10 @@ WSGI_APPLICATION = "deeptech.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.contrib.gis.db.backends.postgis",
-        # "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "deeptechwsl",
         "USER": "deeptech_user",
-        "PASSWORD": config("DATABASE_PASSWORD"),
-        "HOST": "localhost",
+        "PASSWORD": "deeptech_password",
+        "HOST": "db",
         "PORT": "5432",
     }
 }
@@ -211,11 +210,11 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 ## Broker settings.
 
 # CELERY_BROKER_URL = "amqp://localhost"
-
+# CELER_BROKER_URL = "redis://redis:6379/0"
 CELERY_RESULT_BACKEND = "django-db"
+# CELERY_RESULT_BACKEND = "redis://redis:6379/0"
 
 # CELERY_RESULT_BACKEND = "django-cache"
-
 # celery setting.
 CELERY_CACHE_BACKEND = "default"
 
