@@ -1,0 +1,55 @@
+# version: "3"
+# services:
+#   # Django
+#   web:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     hostname: web
+#     command: python manage.py runserver 0.0.0.0:8000
+#     volumes:
+#       - .:/code
+#     ports:
+#       - "8000:8000"
+
+#     depends_on:
+#       - db
+
+version: "3"
+
+services:
+  # db:
+  #   image: postgres
+  #   environment:
+  #     - POSTGRES_DB=postgres
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #   ports:
+  #     - 5432:5432
+  #   volumes:
+  #     - ./data/postgres:/var/lib/postgresql/data
+
+  # Postgis
+  db:
+    image: postgis/postgis
+    hostname: db
+    restart: always
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+
+  web:
+    build: .
+    hostname: web
+    command: python3 manage.py runserver 0.0.0.0:8888
+    volumes:
+      - .:/code
+    ports:
+      - "8888:8888"
+    depends_on:
+      - db

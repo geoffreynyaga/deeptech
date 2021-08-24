@@ -1,0 +1,17 @@
+venv
+.env
+Scripts/gdal/output
+Scripts/gdal/output_rgb
+Scripts/gdal/bendor.tif
+ui
+*.tif
+*.tif.*
+rabbitmqsettings.md
+media
+media/rasters
+media/rasters/reprojected
+
+rasters
+uploads
+output_rgb
+output
