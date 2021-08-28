@@ -61,18 +61,18 @@ services:
       - ./data/redis:/var/lib/redis
 
   #React
-  react:
-    image: react
-    hostname: react
-    restart: always
-    build:
-      context: ./ui
-      dockerfile: Dockerfile.dev
-    # environment:
-    #   NODE_ENV: "development"
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./src:/code/src
-    depends_on:
-      - web
+  # react:
+  #   image: react
+  #   hostname: react
+  #   restart: always
+  #   build:
+  #     context: ./ui
+  #     dockerfile: Dockerfile.dev
+  #   # environment:
+  #   #   NODE_ENV: "development"
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./src:/code/src
+  #   depends_on:
+  #     - web

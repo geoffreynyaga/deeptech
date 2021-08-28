@@ -1,11 +1,15 @@
 import os
 
 from celery import Celery
+from decouple import config
 
+is_docker = os.environ.get("IS_DOCKER", False)
 # Set the default Django settings module for the 'celery' program.
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "deeptech.settings")
 
-app = Celery("deeptech", broker="redis://localhost:6379")
+broker = "redis://redis:6379/0" if is_docker else "redis://localhost:6379"
+
+app = Celery("deeptech", broker=broker)
 
 # Using a string here means the worker doesn't have to serialize
 # the configuration object to child processes.
