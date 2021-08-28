@@ -27,7 +27,7 @@ SECRET_KEY = "jijswa!@8)6ts7b&smp7%8^4i2k@kd1(s&pr@)dqeo&_-kw6gz"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -89,16 +89,41 @@ WSGI_APPLICATION = "deeptech.wsgi.application"
 
 
 # Django Postgis database
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.contrib.gis.db.backends.postgis",
+#         "NAME": "deeptech",
+#         "USER": "postgres",
+#         "PASSWORD": config("DATABASE_PASSWORD"),
+#         "HOST": "db",
+#         "PORT": "5432",
+#     }
+# }
+
+# Localhost Postgis database
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.contrib.gis.db.backends.postgis",
+#         "NAME": "deeptech",
+#         "USER": "postgres",
+#         "PASSWORD": config("DATABASE_PASSWORD"),
+#         "HOST": "localhost",
+#         "PORT": "5432",
+#     }
+# }
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.contrib.gis.db.backends.postgis",
-        "NAME": "deeptech",
-        "USER": "postgres",
-        "PASSWORD": config("DATABASE_PASSWORD"),
+        # "ENGINE": "django.contrib.gis.db.backends.postgis",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "deeptechwsl",
+        "USER": "deeptech_user",
+        "PASSWORD": "deeptech_password",
         "HOST": "localhost",
         "PORT": "5432",
     }
 }
+
 
 # get environment variable values
 
