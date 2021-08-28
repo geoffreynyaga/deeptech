@@ -1,8 +1,5 @@
-
 # Pull base image
 FROM python:3.8
-
-
 
 # set default environment variables
 ENV PYTHONUNBUFFERED 1
@@ -22,41 +19,41 @@ ENV PORT=8888
 RUN mkdir /code
 WORKDIR /code
 
-
-
 # Add current directory code to working directory
 ADD . /code/
 
-
+# ssh
+ENV SSH_PASSWD "root:Docker!"
 # Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    tzdata \
-    python3-setuptools \
+RUN apt-get update && apt-get install -y --no-install-recommends dialog \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends openssh-server \
     python3-pip \
     python3-dev \
-    python3-venv \
     git \
     build-essential \
-    python3-wheel \
-    python3-cffi \
-    libcairo2 \
-    libpango-1.0-0  \
-    libpangocairo-1.0-0  \
-    libgdk-pixbuf2.0-0  \
-    libffi-dev  \
-    shared-mime-info \
     binutils \ 
     libproj-dev \ 
     gdal-bin \ 
     redis-server\ 
     && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    echo "$SSH_PASSWD" | chpasswd \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY sshd_config /etc/ssh/
+COPY init.sh /usr/local/bin/
+
+RUN chmod u+x /usr/local/bin/init.sh
+
 
 # Install dependencies
 ADD requirements.txt /code/
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-EXPOSE 8888
-CMD gunicorn deeptech.wsgi:application --bind 0.0.0.0:$PORT
+
+EXPOSE 8888 2222
+
+ENTRYPOINT ["init.sh"]
+# CMD gunicorn deeptech.wsgi:application --bind 0.0.0.0:$PORT
