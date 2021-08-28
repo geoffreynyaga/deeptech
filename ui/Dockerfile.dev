@@ -1,0 +1,17 @@
+FROM node:16-alpine
+
+WORKDIR /code/ui
+
+COPY package.json ./
+
+# COPY Dockerfile.dev ./
+
+RUN npm install
+# RUN npm install -g npm
+
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
