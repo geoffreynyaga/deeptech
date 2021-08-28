@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from decouple import config
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -26,16 +25,23 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 
+# Database
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
 DATABASES = {
     "default": {
         "ENGINE": "django.contrib.gis.db.backends.postgis",
         "NAME": "deeptechwsl",
         "USER": "deeptech_user",
         "PASSWORD": "deeptech_password",
-        "HOST": "localhost",
+        "HOST": "db",
         "PORT": "5432",
     }
 }
+
+
+# CELERY_BROKER_URL = "amqp://localhost"
+CELER_BROKER_URL = "redis://redis:6379/0"
 
 
 CORS_ALLOWED_ORIGINS = [

@@ -1,43 +1,15 @@
-# version: "3"
-# services:
-#   # Django
-#   web:
-#     build:
-#       context: .
-#       dockerfile: Dockerfile
-#     hostname: web
-#     command: python manage.py runserver 0.0.0.0:8000
-#     volumes:
-#       - .:/code
-#     ports:
-#       - "8000:8000"
-
-#     depends_on:
-#       - db
-
 version: "3"
 
 services:
-  # db:
-  #   image: postgres
-  #   environment:
-  #     - POSTGRES_DB=postgres
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=postgres
-  #   ports:
-  #     - 5432:5432
-  #   volumes:
-  #     - ./data/postgres:/var/lib/postgresql/data
-
   # Postgis
   db:
-    image: postgis/postgis
+    image: kartoza/postgis
     hostname: db
     restart: always
     environment:
-      POSTGRES_DB: "postgres"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "deeptechwsl"
+      POSTGRES_USER: "deeptech_user"
+      POSTGRES_PASSWORD: "deeptech_password"
     ports:
       - "5432:5432"
     volumes:
@@ -53,3 +25,54 @@ services:
       - "8888:8888"
     depends_on:
       - db
+      - redis
+
+  #celery
+  celery:
+    image: celery
+    container_name: celery
+    build:
+      context: .
+    command: celery -A deeptech worker -l INFO
+    hostname: celery
+    restart: always
+    environment:
+      BROKER_URL: redis://redis:6379/0
+    #   CELERY_RESULT_BACKEND: redis://redis:6379/0
+    volumes:
+      # - ./data/celery:/var/lib/celery
+      - .:/code
+    depends_on:
+      - db
+      - redis
+      - web
+
+  #redis
+  redis:
+    image: redis
+    hostname: redis
+    restart: always
+
+    # environment:
+    #   REDIS_PASSWORD: redis_password
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/var/lib/redis
+
+  #React
+  # react:
+  #   image: react
+  #   hostname: react
+  #   restart: always
+  #   build:
+  #     context: ./ui
+  #     dockerfile: Dockerfile.dev
+  #   # environment:
+  #   #   NODE_ENV: "development"
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./src:/code/src
+  #   depends_on:
+  #     - web
