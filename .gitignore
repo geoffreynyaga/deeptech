@@ -144,3 +144,4 @@ Scripts/gdal/output_rgb/
 *.tif.*
 rabbitmqsettings.md
 media/
+schema.png

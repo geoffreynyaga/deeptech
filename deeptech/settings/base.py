@@ -45,9 +45,7 @@ THIRD_PARTY_APPS = [
     "raster",
 ]
 
-CREATED_APPS = [
-    "accounts",
-]
+CREATED_APPS = ["accounts", "farm"]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + CREATED_APPS
 

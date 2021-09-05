@@ -1,7 +1,8 @@
 from django.contrib import admin
+
 from leaflet.admin import LeafletGeoAdmin
 
-from accounts.models import Farmer, PlotDetail, PlotMap
+from accounts.models import ChemicalCompany, Farmer, SeedCompany
 
 
 # Register your models here.
@@ -28,11 +29,8 @@ class FarmerAdmin(LeafletGeoAdmin):
 
 
 admin.site.register(Farmer, FarmerAdmin)
-
-# admin.site.register(PlotDetail)
-admin.site.register(PlotDetail, LeafletGeoAdmin)
-
-admin.site.register(PlotMap, LeafletGeoAdmin)
+admin.site.register(ChemicalCompany)
+admin.site.register(SeedCompany)
 
 
 # OSMGeoAdmin import

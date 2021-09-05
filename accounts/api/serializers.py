@@ -1,11 +1,15 @@
 # create model serializer
 from django.contrib.auth.models import User
 from django.contrib.gis.geos import Point
-from rest_framework import serializers
-from rest_framework_gis.serializers import (GeoFeatureModelSerializer,
-                                            GeometrySerializerMethodField)
 
-from accounts.models import Farmer, PlotDetail
+from rest_framework import serializers
+from rest_framework_gis.serializers import (
+    GeoFeatureModelSerializer,
+    GeometrySerializerMethodField,
+)
+
+from accounts.models import Farmer
+from farm.models import PlotDetail
 
 
 class PlotSerializer(GeoFeatureModelSerializer):
