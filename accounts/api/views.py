@@ -2,9 +2,13 @@ from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from accounts.models import Farmer
+from accounts.models import Farmer, SafaricomFarmer
 
-from .serializers import FarmerDetailSerializer, FarmerListSerializer
+from .serializers import (
+    FarmerDetailSerializer,
+    FarmerListSerializer,
+    SafaricomFarmerListSerializer,
+)
 
 
 # generics.ListAPIView
@@ -42,4 +46,21 @@ class FarmerDetailAPIView(generics.RetrieveAPIView):
     #     obj = self.get_object()
     #     print(obj, "obj")
     #     serializer = FarmerDetailSerializer(obj)
+    #     return Response(serializer.data)
+
+
+class SafaricomFarmerListAPIView(generics.ListCreateAPIView):
+    queryset = SafaricomFarmer.objects.all()
+    serializer_class = SafaricomFarmerListSerializer
+    permission_classes = [IsAuthenticated]
+
+    # def list(self, request):
+    #     # Note the use of `get_queryset()` instead of `self.queryset`
+    #     queryset = self.get_queryset()
+    #     print(queryset, "queryset")
+    #     # qs = queryset.filter(acreage__gte=100).filter(farm_name="Kotut")
+    #     # print(qs,"qs")
+
+    #     serializer = SafaricomFarmerListSerializer(queryset, many=True)
+
     #     return Response(serializer.data)

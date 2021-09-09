@@ -8,7 +8,7 @@ from rest_framework_gis.serializers import (
     GeometrySerializerMethodField,
 )
 
-from accounts.models import Farmer
+from accounts.models import Farmer, SafaricomFarmer
 from farm.models import PlotDetail
 
 
@@ -88,4 +88,27 @@ class FarmerDetailSerializer(GeoFeatureModelSerializer):
             "ward",
             "boundary",
             "plots",
+        )
+
+
+class SafaricomFarmerListSerializer(serializers.ModelSerializer):
+    class Meta:
+
+        model = SafaricomFarmer
+
+        fields = (
+            "farmer_name",
+            "id_number",
+            "phone_number",
+            "address",
+            "location_pin",
+            "boundary",
+            "has_errors",
+            "acreage",
+            "county",
+            "location",
+            "total_acreage_sprayed",
+            "total_acreage_mapped",
+            "date_created",
+            "date_modified",
         )

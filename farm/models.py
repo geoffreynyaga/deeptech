@@ -70,21 +70,28 @@ def convert_tif_to_raster(sender, instance, created, **kwargs):
         # Read a raster as a file object from a remote source.
         from urllib.request import urlopen
 
+        # full_url = request.build_absolute_uri()
+        instance.save()
+
         full_url = f"http://127.0.0.1:8000{instance.uploaded_tif.url}"
         print(full_url, "full_url")
 
         dat = urlopen(full_url).read()
-        print(dat, "dat")
+        # print(dat, "dat")
 
         from django.contrib.gis.gdal import GDALRaster
 
-        # from myapp.models import RasterWithName
-        gdal_raster = GDALRaster(dat)
-        # rast = RasterWithName(name="one", raster=gdal_raster)
-        # rast.save()
-        print(gdal_raster.name, "gdal_raster.name")
+        # gdal_raster = GDALRaster(full_url, write=False)
+        rst_file = open(full_url, "rb")
 
-        instance.raster = gdal_raster
+        rst_bytes = rst_file.read()
+        rst = GDALRaster(rst_bytes)
+        # gdal_raster = GDALRaster(dat)
+
+        print(rst.name, "rst.name")
+
+        instance.raster = rst
+        instance.save()
 
         # GDALRaster django model
 
@@ -95,7 +102,6 @@ def convert_tif_to_raster(sender, instance, created, **kwargs):
 
 
 post_save.connect(convert_tif_to_raster, sender=PlotMap)
-# import post_save signal django
 
 CROP = (
     ("MZE", "Maize"),

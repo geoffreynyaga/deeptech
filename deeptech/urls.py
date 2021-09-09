@@ -18,9 +18,14 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+
+from django_otp.admin import OTPAdminSite
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+
+admin.site.__class__ = OTPAdminSite
+
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -51,10 +56,9 @@ urlpatterns = [
 # urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# if settings.DEBUG:
-#     import debug_toolbar
+if settings.DEBUG:
+    import debug_toolbar
 
-#     urlpatterns = [
-#         url(r"^__debug__/", include(debug_toolbar.urls)),
-#         # url(r"^api/", include(urlpatterns)),
-#     ] + urlpatterns
+    urlpatterns = [
+        url(r"^__debug__/", include(debug_toolbar.urls)),
+    ] + urlpatterns

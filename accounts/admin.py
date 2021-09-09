@@ -2,7 +2,13 @@ from django.contrib import admin
 
 from leaflet.admin import LeafletGeoAdmin
 
-from accounts.models import ChemicalCompany, Farmer, SeedCompany
+from accounts.models import (
+    ChemicalCompany,
+    Farmer,
+    SafaricomFarmer,
+    SafaricomFarmerCSV,
+    SeedCompany,
+)
 
 
 # Register your models here.
@@ -28,9 +34,42 @@ class FarmerAdmin(LeafletGeoAdmin):
     # read_only_fields = ("pin_number",)
 
 
+class SafaricomFarmerAdmin(LeafletGeoAdmin):
+    fields = (
+        "farmer_name",
+        "has_errors",
+        "error_comments",
+        "county",
+        "location",
+        "location_pin",
+        "boundary",
+        "id_number",
+        "phone_number",
+        "address",
+        "acreage",
+        "total_acreage_sprayed",
+        "total_acreage_mapped",
+    )
+
+    list_display = (
+        "farmer_name",
+        "has_errors",
+        "county",
+        "acreage",
+        "location_pin",
+        "boundary",
+    )
+    search_fields = ("farmer_name",)
+    list_filter = ("has_errors", "county", "acreage")
+    # read_only_fields = ("pin_number",)
+
+
 admin.site.register(Farmer, FarmerAdmin)
+admin.site.register(SafaricomFarmer, SafaricomFarmerAdmin)
+
 admin.site.register(ChemicalCompany)
 admin.site.register(SeedCompany)
+admin.site.register(SafaricomFarmerCSV)
 
 
 # OSMGeoAdmin import

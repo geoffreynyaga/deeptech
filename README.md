@@ -1,6 +1,7 @@
 # DeepTech
 
 AI tools for agriculture
+![Build Status](https://github.com/geoffreynyaga/deeptech/workflows/Deeptech%20CI/badge.svg)
 
 ## Installation (Linux/WSL)
 
@@ -17,17 +18,18 @@ Install my-project with npm
 ```
 
 ## Setup your postgres database with name  "deeptech" and a password of your choosing
- - NB:  rename .env.sample to .env and prepopulate the database password with the password you created above
+
+- NB:  rename .env.sample to .env and prepopulate the database password with the password you created above
 
 ```bash
   python manage.py runserver
 ```
 
-
 ## API Collections
-go to  http://localhost:8000/swagger/ to view the API documentation
-## REDIS
 
+go to  <http://localhost:8000/swagger/> to view the API documentation
+
+## REDIS
 
 ``` bash
 sudo apt-get install redis-server
