@@ -145,3 +145,4 @@ Scripts/gdal/output_rgb/
 rabbitmqsettings.md
 media/
 schema.png
+*.csv
