@@ -13,7 +13,7 @@ Install my-project with npm
   virtualenv venv
   source venv/bin/activate
   pip install -r requirements.txt
-  sudo apt-get install binutils libproj-dev gdal-bin python-gdal
+  sudo apt-get install binutils libproj-dev gdal-bin 
 
 ```
 

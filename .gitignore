@@ -146,3 +146,5 @@ rabbitmqsettings.md
 media/
 schema.png
 *.csv
+
+deployment.md
