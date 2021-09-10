@@ -68,7 +68,7 @@ def read_csv(file_path):
             """
             count = count + 1
 
-            if count >= 150:
+            if count >= 150000:
                 break
 
             farmer_name = row[0]
