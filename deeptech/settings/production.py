@@ -45,7 +45,7 @@ CELER_BROKER_URL = "redis://redis:6379/0"
 
 
 CORS_ALLOWED_ORIGINS = [
-    "app.astraldeeptech.com",
+    "https://app.astraldeeptech.com",
 ]
 
 
