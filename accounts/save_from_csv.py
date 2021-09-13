@@ -205,8 +205,12 @@ def read_csv(file_path):
                 safaricom_farmer = SafaricomFarmer.objects.filter(
                     farmer_name=farmer_name, has_errors=False
                 ).last()
-
-                safaricom_farmer.boundary = multi_line_to_polygon
+                try:
+                    safaricom_farmer.boundary = multi_line_to_polygon
+                except:
+                    print("error saving boundary")
+                    logger.info("error saving boundary")
+                    continue
 
                 safaricom_farmer.save()
 
@@ -285,7 +289,13 @@ def read_csv(file_path):
                     farmer_name=farmer_name, has_errors=False
                 ).last()
 
-                safaricom_farmer.boundary = multi_line_to_polygon
+                try:
+                    safaricom_farmer.boundary = multi_line_to_polygon
+                except Exception as e:
+                    print(e, "error saving boundary")
+                    logger.info(e, "error saving boundary")
+
+                    continue
 
                 safaricom_farmer.save()
 
