@@ -75,7 +75,7 @@ LOGGING = {
         "file": {
             "level": "INFO",
             "class": "logging.FileHandler",
-            "filename": "/var/log/django.log",
+            "filename": "/home/deeptech/api/logs/django.log",
             "formatter": "app",
         },
     },
@@ -91,3 +91,15 @@ LOGGING = {
         },
     },
 }
+
+
+FILE_UPLOAD_HANDLERS = [
+    "django.core.files.uploadhandler.MemoryFileUploadHandler",
+    "django.core.files.uploadhandler.TemporaryFileUploadHandler",
+]
+
+
+MAX_UPLOAD_SIZE = 5242880
+DATA_UPLOAD_MAX_MEMORY_SIZE = None
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880
+DATA_UPLOAD_MAX_NUMBER_FIELDS = None

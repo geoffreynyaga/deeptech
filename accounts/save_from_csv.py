@@ -306,11 +306,11 @@ def read_csv(file_path):
 
 
 if __name__ == "__main__":
-    # read_csv("./safdata.csv")
-    x = [
-        "-0.2071964 35.8474109",
-        "-0.2072031 35.847412",
-        "-0.2071972 35.8474104",
-        "-0.2071964 35.8474109",
-    ]
-    convert_polygon_array_to_array_of_arrays(x)
+    read_csv("./safdata.csv")
+    # x = [
+    #     "-0.2071964 35.8474109",
+    #     "-0.2072031 35.847412",
+    #     "-0.2071972 35.8474104",
+    #     "-0.2071964 35.8474109",
+    # ]
+    # convert_polygon_array_to_array_of_arrays(x)
