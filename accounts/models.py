@@ -1,3 +1,4 @@
+import logging
 from xml.etree.ElementTree import Comment
 
 from django.contrib.auth import get_user_model
@@ -15,6 +16,8 @@ from accounts.tasks import save_safaricom_farmers_from_csv
 
 User = get_user_model()
 # Create your models here.
+
+logger = logging.getLogger(__name__)
 
 
 class Farmer(models.Model):
@@ -109,13 +112,15 @@ def parse_csv_file(sender, instance, created, **kwargs):
     if created:
         # get the file path
         file_path = instance.csv_file.path
-        print(file_path, "file path")
+        logger.info(file_path, "file path")
         # open the file
         try:
             # read_csv(file_path)
+            logger.info(file_path, " pushing the file path to task queue")
+
             save_safaricom_farmers_from_csv.delay(file_path)
         except Exception as e:
-            print(e, "error from models")
+            logger.info(e, "error from models")
 
 
 post_save.connect(parse_csv_file, sender=SafaricomFarmerCSV)

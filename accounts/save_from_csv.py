@@ -1,9 +1,12 @@
 import csv
+import logging
 
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import LineString, MultiLineString, Point, Polygon
 
 from numpy import poly
+
+logger = logging.getLogger(__name__)
 
 
 def save_lat_lng_to_point(lat, lng):
@@ -51,6 +54,8 @@ def convert_polygon_array_to_array_of_arrays(polygon_array):
 
 
 def read_csv(file_path):
+    logger.info("Reading CSV file: {}".format(file_path))
+
     # read csv file
     with open(file_path, "r") as csv_file:
         from accounts.models import SafaricomFarmer
@@ -73,6 +78,8 @@ def read_csv(file_path):
 
             farmer_name = row[0]
             print(f"=============={count}- {farmer_name}===============")
+            logger.info(f"=============={count}- {farmer_name}===============")
+
             location = row[1]
             county = row[2]
             latitude = float(row[3])
@@ -90,7 +97,11 @@ def read_csv(file_path):
 
                 if safaricom_farmer_qs.exists():
                     print("<<<<<<<<<<< already exists")
+                    logger.info("<<<<<<<<<<< already exists")
+
                     print("<<<<<<<<<<< skipping >>>>>>>>")
+                    logger.info("<<<<<<<<<<< skipping >>>>>>>>")
+
                     # print new line
                     print("\n")
                     print("===============================")
@@ -169,11 +180,13 @@ def read_csv(file_path):
                     # print(line, "line")
                 except Exception as e:
                     print(e, "error converting ot Linestring")
+                    continue
 
                 try:
                     multi_line = MultiLineString(line)
                 except Exception as e:
                     print(e, "error converting to MultiLineString")
+                    continue
 
                 try:
 
@@ -186,6 +199,7 @@ def read_csv(file_path):
                     # )  # Converts the multilinestring to polygon
                 except Exception as e:
                     print(e, "convex hull error")
+                    continue
 
                 # safaricom_farmer.geom = multi_line
                 safaricom_farmer = SafaricomFarmer.objects.filter(
@@ -212,11 +226,13 @@ def read_csv(file_path):
                     )
                 except Exception as e:
                     print(e, "error convertint ot Linestring 1")
+                    continue
 
                 try:
                     multi_line = MultiLineString(line)
                 except Exception as e:
                     print(e, "error converting to MultiLineString 1")
+                    continue
 
                 try:
 
@@ -230,6 +246,7 @@ def read_csv(file_path):
                     safaricom_farmer.boundary = multi_line_to_polygon
                 except Exception as e:
                     print(e, "convex hull error 1")
+                    continue
 
                 safaricom_farmer.save()
 
@@ -247,11 +264,13 @@ def read_csv(file_path):
                     )
                 except Exception as e:
                     print(e, "error convertint ot Linestring")
+                    continue
 
                 try:
                     multi_line = MultiLineString(line)
                 except Exception as e:
                     print(e, "error converting to MultiLineString")
+                    continue
 
                 try:
 
@@ -259,6 +278,7 @@ def read_csv(file_path):
 
                 except Exception as e:
                     print(e, "convex hull error")
+                    continue
 
                 # safaricom_farmer.geom = multi_line
                 safaricom_farmer = SafaricomFarmer.objects.filter(
