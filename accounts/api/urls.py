@@ -1,6 +1,11 @@
 from django.urls import path
 
-from .views import FarmerDetailAPIView, FarmerListAPIView, FarmerListTestAPIView, SafaricomFarmerListAPIView
+from .views import (
+    FarmerDetailAPIView,
+    FarmerListAPIView,
+    FarmerListTestAPIView,
+    SafaricomFarmerListAPIView,
+)
 
 urlpatterns = [
     path("list/", FarmerListAPIView.as_view(), name="farmers_list"),

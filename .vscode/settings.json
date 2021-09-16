@@ -1,4 +1,5 @@
 {
   "appService.defaultWebAppToDeploy": "/subscriptions/0de1e61b-7b97-4c43-bf29-416c43070a75/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/deeptech",
-  "appService.deploySubpath": "."
+  "appService.deploySubpath": ".",
+  "python.formatting.provider": "black"
 }

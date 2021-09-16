@@ -1,10 +1,12 @@
-from accounts.tasks import add_two_numbers
+import logging
+
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from accounts.models import Farmer, SafaricomFarmer
+from accounts.tasks import add_two_numbers
 
 from .serializers import (
     FarmerDetailSerializer,
@@ -12,6 +14,7 @@ from .serializers import (
     SafaricomFarmerListSerializer,
 )
 
+logger = logging.getLogger(__name__)
 
 # generics.ListAPIView
 class FarmerListAPIView(generics.ListCreateAPIView):
@@ -67,6 +70,7 @@ class SafaricomFarmerListAPIView(generics.ListCreateAPIView):
 
     #     return Response(serializer.data)
 
+
 class FarmerListTestAPIView(APIView):
     serializer_class = FarmerListSerializer
     permission_classes = [AllowAny]
@@ -74,11 +78,22 @@ class FarmerListTestAPIView(APIView):
     def post(self, request):
         data = request.data
         print(data, "data")
+        logger.info(data, "data")
         x = data["x"]
         y = data["y"]
 
-        add_two_numbers.delay(x, y)
-        add_two_numbers.apply_async(args=[x, y])
+        try:
+            result = add_two_numbers.delay(x, y)
+            print(result, "result")
+            
+            # return Response({"result": result.get()})
 
-        return Response({"message":
-         "Task has been submitted"})
+            add_two_numbers.delay(x, y)
+            add_two_numbers.apply_async(args=[x, y])
+            return Response({"message": "Task has been submitted"})
+        except Exception as e:
+            print(e, "e")
+            logger.error(e, "e")
+            return Response({"message": "Error Submitting Task"})
+
+
