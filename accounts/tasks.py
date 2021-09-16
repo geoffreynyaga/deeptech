@@ -18,3 +18,7 @@ def save_safaricom_farmers_from_csv(csv_file):
     from accounts.save_from_csv import read_csv
 
     return read_csv(csv_file)
+
+@shared_task
+def add_two_numbers(x, y):
+    return x + y

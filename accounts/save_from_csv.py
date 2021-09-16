@@ -96,22 +96,15 @@ def read_csv(file_path):
                 # print(safaricom_farmer_qs, "safaricom_farmer_qs")
 
                 if safaricom_farmer_qs.exists():
-                    print("<<<<<<<<<<< already exists")
-                    logger.info("<<<<<<<<<<< already exists")
-
-                    print("<<<<<<<<<<< skipping >>>>>>>>")
-                    logger.info("<<<<<<<<<<< skipping >>>>>>>>")
+                    print("<<<<<<<<<<< already exists: Skipping")
+                    logger.info("<<<<<<<<<<< already exists: Skipping")
 
                     # print new line
                     print("\n")
                     print("===============================")
 
-                    print("\n")
-                    print("\n")
-                    print("\n")
-                    print("\n")
-
                     continue
+                
                 else:
                     # create new account
                     # print(row)

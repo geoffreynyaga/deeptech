@@ -1,6 +1,8 @@
+from accounts.tasks import add_two_numbers
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from accounts.models import Farmer, SafaricomFarmer
 
@@ -64,3 +66,19 @@ class SafaricomFarmerListAPIView(generics.ListCreateAPIView):
     #     serializer = SafaricomFarmerListSerializer(queryset, many=True)
 
     #     return Response(serializer.data)
+
+class FarmerListTestAPIView(APIView):
+    serializer_class = FarmerListSerializer
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        data = request.data
+        print(data, "data")
+        x = data["x"]
+        y = data["y"]
+
+        add_two_numbers.delay(x, y)
+        add_two_numbers.apply_async(args=[x, y])
+
+        return Response({"message":
+         "Task has been submitted"})
