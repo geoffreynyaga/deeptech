@@ -41,7 +41,8 @@ DATABASES = {
 
 
 # CELERY_BROKER_URL = "amqp://localhost"
-CELER_BROKER_URL = "redis://redis:6379/0"
+# CELER_BROKER_URL = "redis://redis:6379/0"
+CELERY_BROKER_URL=config("CELERY_BROKER_URL")
 
 
 CORS_ALLOWED_ORIGINS = [
