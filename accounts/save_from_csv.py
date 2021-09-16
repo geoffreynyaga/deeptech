@@ -72,7 +72,8 @@ def read_csv(file_path):
             ['qnktqf', 'Rongai ', ' Nakuru', '-0.2072', '35.8474', '-0.2071964 35.8474109,-0.2072031 35.847412,-0.2071972 35.8474104,']
             """
 
-            if count // 1000 == 0:
+
+            if count % 1000 == 0:
                 logger.info("divisible by 1000, sleeping for ten secs")
                 # sleep for 1 second
                 logger.info("Sleeping for 1 second")
