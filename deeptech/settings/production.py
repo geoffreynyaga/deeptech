@@ -41,7 +41,8 @@ DATABASES = {
 
 
 # CELERY_BROKER_URL = "amqp://localhost"
-CELER_BROKER_URL = "redis://redis:6379/0"
+# CELER_BROKER_URL = "redis://redis:6379/0"
+CELERY_BROKER_URL=config("CELERY_BROKER_URL")
 
 
 CORS_ALLOWED_ORIGINS = [
@@ -103,3 +104,7 @@ MAX_UPLOAD_SIZE = 5242880
 DATA_UPLOAD_MAX_MEMORY_SIZE = None
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
+
+
+# DEFAULT_FILE_STORAGE = "storages.backends.azure_storage.AzureStorage"
+# STATICFILES_STORAGE = "custom_storage.custom_azure.PublicAzureStorage"

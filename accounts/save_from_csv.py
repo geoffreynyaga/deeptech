@@ -1,10 +1,10 @@
 import csv
 import logging
+import time
 
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import LineString, MultiLineString, Point, Polygon
 
-from numpy import poly
 
 logger = logging.getLogger(__name__)
 
@@ -71,6 +71,15 @@ def read_csv(file_path):
             """
             ['qnktqf', 'Rongai ', ' Nakuru', '-0.2072', '35.8474', '-0.2071964 35.8474109,-0.2072031 35.847412,-0.2071972 35.8474104,']
             """
+
+
+            if count % 1000 == 0:
+                logger.info("divisible by 1000, sleeping for ten secs")
+                # sleep for 1 second
+                logger.info("Sleeping for 1 second")
+                time.sleep(10)
+                
+
             count = count + 1
 
             if count >= 150000:
@@ -96,22 +105,15 @@ def read_csv(file_path):
                 # print(safaricom_farmer_qs, "safaricom_farmer_qs")
 
                 if safaricom_farmer_qs.exists():
-                    print("<<<<<<<<<<< already exists")
-                    logger.info("<<<<<<<<<<< already exists")
-
-                    print("<<<<<<<<<<< skipping >>>>>>>>")
-                    logger.info("<<<<<<<<<<< skipping >>>>>>>>")
+                    print("<<<<<<<<<<< already exists: Skipping")
+                    logger.info("<<<<<<<<<<< already exists: Skipping")
 
                     # print new line
                     print("\n")
                     print("===============================")
 
-                    print("\n")
-                    print("\n")
-                    print("\n")
-                    print("\n")
-
                     continue
+
                 else:
                     # create new account
                     # print(row)

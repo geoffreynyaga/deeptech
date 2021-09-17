@@ -7,6 +7,7 @@ app = Celery("tasks", broker="pyamqp://guest@localhost//")
 
 logger = logging.getLogger(__name__)
 
+
 @app.task
 def add(x, y):
     return x + y
@@ -18,3 +19,8 @@ def save_safaricom_farmers_from_csv(csv_file):
     from accounts.save_from_csv import read_csv
 
     return read_csv(csv_file)
+
+
+@shared_task
+def add_two_numbers(x, y):
+    return x + y
