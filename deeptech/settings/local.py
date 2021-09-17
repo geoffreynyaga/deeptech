@@ -28,7 +28,7 @@ ALLOWED_HOSTS = ["*"]
 DATABASES = {
     "default": {
         "ENGINE": "django.contrib.gis.db.backends.postgis",
-        "NAME": "deeptechwsl",
+        "NAME": "deeptech_db",
         "USER": "deeptech_user",
         "PASSWORD": "deeptech_password",
         "HOST": "localhost",
