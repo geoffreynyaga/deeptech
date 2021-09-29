@@ -88,22 +88,25 @@ def read_csv(file_path, command_str=""):
             logger.info(f"=============={count}- {farmer_name}===============")
 
             if command_str == "update":
-                logger.info("updating...")
                 farmer_name = row[3]
+                logger.info(farmer_name, "updating...")
 
                 try:
                     safaricom_farmer = SafaricomFarmer.objects.filter(
                         farmer_name=farmer_name
                     ).last()
 
-                    if safaricom_farmer and safaricom_farmer == False:
+                    if safaricom_farmer and safaricom_farmer.is_mapped == False:
                         safaricom_farmer.is_mapped = True
                         safaricom_farmer.save()
+                        continue
+                    else:
+                        print("*******************farmer not found")
+                        continue
+
                 except Exception as e:
                     logger.info(e, "error getting the farmer")
                     continue
-
-                continue
 
             location = row[1]
             county = row[2]
