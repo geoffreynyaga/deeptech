@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django.contrib.gis.db import models as gis_models
 
 from leaflet.admin import LeafletGeoAdmin
+from mapwidgets.widgets import GooglePointFieldWidget
 
 from accounts.models import (
     ChemicalCompany,
@@ -9,6 +11,7 @@ from accounts.models import (
     SafaricomFarmerCSV,
     SeedCompany,
 )
+from mapwidgets.widgets import GooglePointFieldWidget
 
 
 # Register your models here.
@@ -35,6 +38,10 @@ class FarmerAdmin(LeafletGeoAdmin):
 
 
 class SafaricomFarmerAdmin(LeafletGeoAdmin):
+    # formfield_overrides = {
+    #     gis_models.PointField: {"widget": GooglePointFieldWidget}
+    # }
+
     fields = (
         "farmer_name",
         "has_errors",
@@ -53,6 +60,7 @@ class SafaricomFarmerAdmin(LeafletGeoAdmin):
 
     list_display = (
         "farmer_name",
+        "is_mapped",
         "has_errors",
         "county",
         "acreage",
@@ -60,7 +68,7 @@ class SafaricomFarmerAdmin(LeafletGeoAdmin):
         "boundary",
     )
     search_fields = ("farmer_name",)
-    list_filter = ("has_errors", "county", "acreage")
+    list_filter = ("is_mapped", "has_errors", "county")
     # read_only_fields = ("pin_number",)
 
 
@@ -68,8 +76,5 @@ admin.site.register(Farmer, FarmerAdmin)
 admin.site.register(SafaricomFarmer, SafaricomFarmerAdmin)
 
 admin.site.register(ChemicalCompany)
-admin.site.register(SeedCompany)
+admin.site.register(SeedCompany, LeafletGeoAdmin)
 admin.site.register(SafaricomFarmerCSV)
-
-
-# OSMGeoAdmin import

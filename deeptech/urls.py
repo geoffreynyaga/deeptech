@@ -26,6 +26,9 @@ from rest_framework import permissions
 
 # admin.site.__class__ = OTPAdminSite
 
+admin.site.site_header = "DeepTech API"
+admin.site.site_title = "DeepTech API Admin Portal"
+admin.site.index_title = "Welcome to DeepTech API"
 
 schema_view = get_schema_view(
     openapi.Info(

@@ -1,5 +1,4 @@
 import logging
-from xml.etree.ElementTree import Comment
 
 from django.contrib.auth import get_user_model
 from django.contrib.gis.db import models as gis_models
@@ -74,6 +73,7 @@ class SafaricomFarmer(models.Model):
     location = models.CharField(max_length=30)
     total_acreage_sprayed = models.FloatField(default=0)
     total_acreage_mapped = models.FloatField(default=0)
+    is_mapped = models.BooleanField(default=False)
 
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
@@ -103,6 +103,7 @@ class SafaricomFarmerCSV(models.Model):
 
     csv_file = models.FileField(upload_to="csv_files/safaricom/")
     uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_update_file = models.BooleanField(default=False)
 
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
@@ -112,15 +113,26 @@ def parse_csv_file(sender, instance, created, **kwargs):
     if created:
         # get the file path
         file_path = instance.csv_file.path
+        command_str = ""
+        print(command_str, "command string")
+        print(instance.is_update_file, "instance.is_update_file")
+        if instance.is_update_file == True:
+            command_str = "update"
+        print(command_str, "command string")
+
+        print(command_str, "command string")
         logger.info(file_path, "file path")
+        print(file_path, "file_path string")
+
         # open the file
         try:
             # read_csv(file_path)
             logger.info(file_path, " pushing the file path to task queue")
 
-            save_safaricom_farmers_from_csv.delay(file_path)
+            save_safaricom_farmers_from_csv.delay(file_path, command_str)
         except Exception as e:
             logger.info(e, "error from models")
+            print(e, "error from models")
 
 
 post_save.connect(parse_csv_file, sender=SafaricomFarmerCSV)

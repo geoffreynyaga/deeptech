@@ -14,11 +14,11 @@ def add(x, y):
 
 
 @shared_task
-def save_safaricom_farmers_from_csv(csv_file):
+def save_safaricom_farmers_from_csv(csv_file, command_str):
     logger.info("shared task reached: save_safaricom_farmers_from_csv func called")
     from accounts.save_from_csv import read_csv
 
-    return read_csv(csv_file)
+    return read_csv(csv_file, command_str)
 
 
 @shared_task

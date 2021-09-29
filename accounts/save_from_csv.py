@@ -53,7 +53,7 @@ def convert_polygon_array_to_array_of_arrays(polygon_array):
     return final_coords
 
 
-def read_csv(file_path):
+def read_csv(file_path, command_str=""):
     logger.info("Reading CSV file: {}".format(file_path))
 
     # read csv file
@@ -72,13 +72,11 @@ def read_csv(file_path):
             ['qnktqf', 'Rongai ', ' Nakuru', '-0.2072', '35.8474', '-0.2071964 35.8474109,-0.2072031 35.847412,-0.2071972 35.8474104,']
             """
 
-
-            if count % 1000 == 0:
+            if count % 2000 == 0:
                 logger.info("divisible by 1000, sleeping for ten secs")
                 # sleep for 1 second
                 logger.info("Sleeping for 1 second")
-                time.sleep(10)
-                
+                time.sleep(2)
 
             count = count + 1
 
@@ -88,6 +86,24 @@ def read_csv(file_path):
             farmer_name = row[0]
             print(f"=============={count}- {farmer_name}===============")
             logger.info(f"=============={count}- {farmer_name}===============")
+
+            if command_str == "update":
+                logger.info("updating...")
+                farmer_name = row[3]
+
+                try:
+                    safaricom_farmer = SafaricomFarmer.objects.filter(
+                        farmer_name=farmer_name
+                    ).last()
+
+                    if safaricom_farmer and safaricom_farmer == False:
+                        safaricom_farmer.is_mapped = True
+                        safaricom_farmer.save()
+                except Exception as e:
+                    logger.info(e, "error getting the farmer")
+                    continue
+
+                continue
 
             location = row[1]
             county = row[2]
