@@ -1,9 +1,15 @@
 import logging
+import os
 from asyncore import read
 
 from celery import Celery, shared_task
 
-app = Celery("tasks", broker="pyamqp://guest@localhost//")
+is_docker = os.environ.get("IS_DOCKER", False)
+
+broker = "redis://redis:6379/0" if is_docker else "redis://localhost:6379"
+
+
+app = Celery("tasks", broker=broker)
 
 logger = logging.getLogger(__name__)
 

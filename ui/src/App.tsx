@@ -30,22 +30,30 @@ function App() {
         marginTop: 20,
       }}
     >
-      <Row>
-        <Col xs={12} sm={12} md={6} lg={6}>
+      <Row
+        style={{
+          height: "100vh",
+          width: "100%",
+          borderWidth: 3,
+          borderColor: "blue",
+          marginTop: 20,
+        }}
+      >
+        <Col xs={12} sm={12} md={4} lg={4}>
           <FarmersList />
         </Col>
         <Col
           xs={12}
           sm={12}
-          md={6}
-          lg={6}
+          md={8}
+          lg={8}
           style={{ borderWidth: 3, borderColor: "red" }}
         >
           <MapContainer
-            center={[-0.9594915139600687, 37.05146055565118]}
+            center={[-1.1860016820338626, 34.449603073128934]}
             zoom={13}
             scrollWheelZoom={false}
-            style={{ height: "100vh", width: "80%" }}
+            style={{ height: "100vh", width: "100%" }}
           >
             <LayersControl position="topright">
               <LayersControl.BaseLayer checked name="Basemap">
@@ -57,11 +65,11 @@ function App() {
               <LayersControl.BaseLayer checked name="RGB">
                 <TileLayer
                   attribution='&copy; <a href="http://osm.org/copyright">Deeptech</a> contributors'
-                  url="http://localhost:8000/raster/algebra/{z}/{x}/{y}.png?layers=r:0=38,g:1=38,b:2=38&alpha=0"
+                  url="http://localhost:8000/raster/algebra/{z}/{x}/{y}.png?layers=r:0=1,g:1=1,b:1=1&alpha=0"
                 />
               </LayersControl.BaseLayer>
               <LayersControl.Overlay name="Marker with popup">
-                <Marker position={[-0.9594915139600687, 37.05146055565118]}>
+                <Marker position={[-1.1860016820338626, 34.449603073128934]}>
                   <Popup>
                     A pretty CSS3 popup. <br /> Easily customizable.
                   </Popup>
@@ -70,11 +78,11 @@ function App() {
               <LayersControl.Overlay checked name="Layer group with circles">
                 <LayerGroup>
                   <Circle
-                    center={[-0.9594915139600687, 37.05146055565118]}
+                    center={[-1.1860016820338626, 34.449603073128934]}
                     pathOptions={{ fillColor: "blue" }}
                     radius={200}
                   />
-                  <Marker position={[-0.9594915139600687, 37.05146055565118]}>
+                  <Marker position={[-1.1860016820338626, 34.449603073128934]}>
                     <Popup>
                       A pretty CSS3 popup. <br /> Easily customizable.
                     </Popup>

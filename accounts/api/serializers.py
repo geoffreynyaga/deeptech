@@ -23,7 +23,6 @@ class PlotSerializer(GeoFeatureModelSerializer):
             "acreage",
             "boundary",
             "crop",
-            "date_planted",
         )
 
 

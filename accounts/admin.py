@@ -44,6 +44,7 @@ class SafaricomFarmerAdmin(LeafletGeoAdmin):
 
     fields = (
         "farmer_name",
+        "is_mapped",
         "has_errors",
         "error_comments",
         "county",
@@ -73,7 +74,23 @@ class SafaricomFarmerAdmin(LeafletGeoAdmin):
 
 
 admin.site.register(Farmer, FarmerAdmin)
-admin.site.register(SafaricomFarmer, SafaricomFarmerAdmin)
+admin.site.register(
+    SafaricomFarmer,
+    SafaricomFarmerAdmin,
+    settings_overrides={
+        "DEFAULT_CENTER": (-1.1860016820338626, 34.449603073128934),
+        "DEFAULT_ZOOM": 16,
+        # "TILES": [("", "//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", "")],
+        "TILES": [
+            ("Basemap", "//{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png", "basemap"),
+            (
+                "Orthomosaic",
+                "//{s}.localhost:8000/raster/algebra/{z}/{x}/{y}.png?layers=r:0=1,g:1=1,b:1=1&alpha=0",
+                "Generated Map",
+            ),
+        ],
+    },
+)
 
 admin.site.register(ChemicalCompany)
 admin.site.register(SeedCompany, LeafletGeoAdmin)

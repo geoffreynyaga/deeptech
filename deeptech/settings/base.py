@@ -47,7 +47,7 @@ THIRD_PARTY_APPS = [
     "django_otp.plugins.otp_totp",
     # "django_otp.plugins.otp_hotp",
     # "django_otp.plugins.otp_static",
-    "mapwidgets"
+    "mapwidgets",
 ]
 
 CREATED_APPS = ["accounts", "farm"]
@@ -165,8 +165,8 @@ LEAFLET_CONFIG = {
     "DEFAULT_ZOOM": 16,
     "MIN_ZOOM": 6,
     "MAX_ZOOM": 21,
-    'SCALE': 'both',
-    'ATTRIBUTION_PRIFIX': 'Astral Deeptech', #attribution of your map
+    "SCALE": "both",
+    "ATTRIBUTION_PRIFIX": "Astral Deeptech",  # attribution of your map
 }
 
 RASTER_USE_CELERY = True

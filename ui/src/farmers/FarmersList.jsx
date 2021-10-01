@@ -20,7 +20,7 @@ function FarmersList(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Token f2b50e3f2ea08d5cc26a299e8e27d7b2f395dc6f",
+        Authorization: "Token 66fdda86a8374b7ecd61611d5a2af7c225bf3122",
       },
     })
       .then((res) => res.json())
@@ -38,7 +38,7 @@ function FarmersList(props) {
               {farmers !== null ? JSON.stringify(farmers) : "no farmers"}
             </pre> */}
           <div>
-            {farmers !== null ? (
+            {farmers !== null && farmers !==undefined ? (
               <ul className="collection">
                 {farmers !== null &&
                   farmers.map((farmer) => (
