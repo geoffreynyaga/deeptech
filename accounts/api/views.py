@@ -4,13 +4,14 @@ from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from drf_yasg.utils import swagger_auto_schema
 from accounts.models import Farmer, SafaricomFarmer
 from accounts.tasks import add_two_numbers
 
 from .serializers import (
     FarmerDetailSerializer,
     FarmerListSerializer,
+    SafaricomFarmerErrorsListSerializer,
     SafaricomFarmerListSerializer,
 )
 
@@ -85,7 +86,7 @@ class FarmerListTestAPIView(APIView):
         try:
             result = add_two_numbers.delay(x, y)
             print(result, "result")
-            
+
             # return Response({"result": result.get()})
 
             add_two_numbers.delay(x, y)
@@ -97,3 +98,37 @@ class FarmerListTestAPIView(APIView):
             return Response({"message": "Error Submitting Task"})
 
 
+class MappedSafaricomFarmersListByCountyAPIView(APIView):
+    serializer_class = SafaricomFarmerListSerializer
+    permission_classes = [AllowAny]
+
+    @swagger_auto_schema(
+        operation_summary="Get Safaricom farmers by county",
+        operation_description="test",
+        operation_id="Your awesome name",
+    )
+    def post(self, request):
+        data = request.data
+        print(data, "data")
+        logger.info(data, "data")
+        county = data["county"]
+
+        print(county, "county")
+        if not county == "all":
+            queryset = SafaricomFarmer.objects.filter(county=county, is_mapped=True)
+        else:
+            queryset = SafaricomFarmer.objects.filter(is_mapped=True)
+
+        serializer = SafaricomFarmerListSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class SafaricomFarmersErrorsListAPIView(generics.ListAPIView):
+    queryset = SafaricomFarmer.objects.all()
+    serializer_class = SafaricomFarmerErrorsListSerializer
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = SafaricomFarmerErrorsListSerializer(queryset, many=True)
+        return Response(serializer.data)

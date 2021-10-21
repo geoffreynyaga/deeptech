@@ -20,7 +20,7 @@ function FarmersList(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Token 66fdda86a8374b7ecd61611d5a2af7c225bf3122",
+        Authorization: "Token 437e40ad5b38ebb77ef53458cf764b3db33b8b67",
       },
     })
       .then((res) => res.json())

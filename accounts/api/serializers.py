@@ -97,17 +97,39 @@ class SafaricomFarmerListSerializer(serializers.ModelSerializer):
 
         fields = (
             "farmer_name",
+            "is_mapped",
             "id_number",
             "phone_number",
             "address",
             "location_pin",
             "boundary",
             "has_errors",
+            "error_comments",
             "acreage",
             "county",
             "location",
             "total_acreage_sprayed",
             "total_acreage_mapped",
+            "date_created",
+            "date_modified",
+        )
+
+
+class SafaricomFarmerErrorsListSerializer(serializers.ModelSerializer):
+    class Meta:
+
+        model = SafaricomFarmer
+
+        fields = (
+            "farmer_name",
+            "is_mapped",
+            "has_errors",
+            "error_comments",
+            "acreage",
+            "county",
+            "location",
+            "location_pin",
+            "boundary",
             "date_created",
             "date_modified",
         )
