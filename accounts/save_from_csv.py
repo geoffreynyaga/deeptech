@@ -88,7 +88,7 @@ def read_csv(file_path, command_str=""):
             logger.info(f"=============={count}- {farmer_name}===============")
 
             if command_str == "update":
-                farmer_name = row[3]
+                farmer_name = row[1]
                 logger.info(farmer_name, "updating...")
 
                 try:

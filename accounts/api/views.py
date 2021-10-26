@@ -128,6 +128,11 @@ class SafaricomFarmersErrorsListAPIView(generics.ListAPIView):
     serializer_class = SafaricomFarmerErrorsListSerializer
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(
+        operation_summary="Get Safaricom farmers by county",
+        operation_description="test",
+        operation_id="Your awesome name",
+    )
     def list(self, request):
         queryset = self.get_queryset()
         serializer = SafaricomFarmerErrorsListSerializer(queryset, many=True)
